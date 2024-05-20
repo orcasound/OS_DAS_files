@@ -8,7 +8,7 @@
 
 
 #### Here is an output for a "L" shaped fiber. The fiber descends at 30 degrees to a depth of 100 m and then turns "North"
-#### Red is the 'actual' (i.e. assumed fiber) and Blue is the located array after localization a number of locating signals.
+#### Red is the 'actual' (i.e. assumed fiber) and Blue is the located array after localization using a number of locating signals.
 ![3d PLOT OF FIBER](LshapedFiber.png)
 
 ## A localized fiber is then used to calculate source locations.
