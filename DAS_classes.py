@@ -68,7 +68,8 @@ class DAS_line:
                                 print(iSpec, l, self.specsDistanceAlongFiber[iSpec], l + dl, x, y)
                             if self.specsDistanceAlongFiber[iSpec] > l and self.specsDistanceAlongFiber[iSpec] <= l + dl:
                                 self.xyzsAlongFiber.append([x, y, z])
-                                self.initial_xyzsAlongFiber.append([x+self.locationUncertainty*(np.random.rand()-0.5), (y+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)])
+                                approxLoc = [x+self.locationUncertainty*(np.random.rand()-0.5), (y+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)]
+                                self.initial_xyzsAlongFiber.append(approxLoc)
                                 iSpec += 1
                             x += dd
                             l += dl
