@@ -2,13 +2,11 @@
 
 ### DAS_defineFiber.py   -----> outputs a binary (pickle) summary of the fiber
 
-## Multiple signal sources can be used to improve the localization of the DAS hydrophones.
-
-### DAS_locateArray.py   -----> outputs plots and adds optimized hydrophone locations to the binary summary of the fiber
-
-#### Here is an output for a "L" shaped fiber. The fiber descends at 30 degrees to a depth of 100 m and then turns "North"
+#### Here is an output for a "L" shaped fiber with 100 hydrophones randomly distributed along the fiber. The fiber descends at 30 degrees to a depth of 100 m and then turns "North"
 #### The Blue dots are the initial assumed locations (randomly generated in the region of the 'actual' fiber) of the hydrophones while the actual (initially unknown in the real world) locations are in Red
 ![3d PLOT OF FIBER](LshapedFiber.png)
+
+### DAS_locateArray.py   -----> outputs plots and adds optimized hydrophone locations to the binary summary of the fiber, class DAS_line.
 
 ###  Now, with a fiber deployed, a number of sources are used at random points near the surface to 'Localize' the individual hydrophone elements
 #### Red is the 'actual' (i.e. assumed fiber) and Blue is the located array after localization using a number of locating signals (Green).
@@ -22,6 +20,6 @@
 #### An assumed source is used to determine time differences recorded on the 'actual' fiber. This models what would be detected by the DAS.
 #### Then time differences calculated with the source and the localized fiber are used to then localize the 'unknown' source
 #### Calculated Source location is  [[501.04589546 -99.55370506  -1.29196534]]
-#### 'Actual' source location is  [500, -100, 0]
+#### Assumed source location is  [500, -100, 0]
 
 ## DAS_classes.py has a number of class and helper functions.
