@@ -25,6 +25,7 @@ class DAS_line:
         self.specsGapsAlongFiber = np.diff(self.specsDistanceAlongFiber)
         self.construct_xyzsOffXaxis(N)   # This is a modeled wiggly fiber to be able to simulate real arrival times
         self.optimizedPositions = []
+        self.num_sources = 0   # number of sources used to localize and find optimizedPositions of hydrophones                #
         if DEBUG >= 10:
             print("  hydros  X,      Y,     Z")
             for i in range(N):
@@ -101,7 +102,7 @@ class DAS_line:
                     return
         self.initial_xyzsAlongFiber = np.array(self.initial_xyzsAlongFiber)
         self.xyzsAlongFiber = np.array(self.xyzsAlongFiber)    # actual xyz's of hydrophones  -- modeled here
-        quadPlot(self.xyzsAlongFiber, self.initial_xyzsAlongFiber, "'Actual-red' vs 'Assumed-blue' hydrophone loations")
+        quadPlot(self.xyzsAlongFiber, self.initial_xyzsAlongFiber, None, "'Actual-red' vs 'Assumed-blue' hydrophone loations")
 
     def calculateSpeckSourceArrivals(self, Ssource, xyzsAlongFiber, DEBUG=0):
         Sx, Sy, Sz = Ssource
@@ -161,7 +162,7 @@ class DAS_line:
             predicted_diffs.append(diffs[upper_tri_indices])
         predicted_diffs = np.array(predicted_diffs) / self.c #convert to time
         return predicted_diffs  # converted to time
-def quadPlot(true_hydrophone_positions, calculated_positions, supTitle):
+def quadPlot(true_hydrophone_positions, calculated_positions, signal_positions, supTitle):
     fig = plt.figure(figsize=(10, 8))  # Create the figure
     fig.suptitle(supTitle, fontsize=14)
     # 2D subplots
@@ -169,26 +170,38 @@ def quadPlot(true_hydrophone_positions, calculated_positions, supTitle):
     # 3D subplot
     ax3d = fig.add_subplot(2, 2, 4, projection='3d')  # Create the 3D axis for the 4th subplot
     # Top view (xy-plane)
+
     axs[0].plot(calculated_positions[:, 0], calculated_positions[:, 1], c='b', marker='o')
     axs[0].plot(true_hydrophone_positions[:, 0], true_hydrophone_positions[:, 1], c='r', marker='+')
+    if isinstance(signal_positions,np.ndarray):
+        axs[0].scatter(signal_positions[:, 0], signal_positions[:, 1], c='g', marker='o')
     axs[0].set_title('Top View (Y vs X)')
     axs[0].set_xlabel('X-West', labelpad=10)
     axs[0].set_ylabel('Y-South', labelpad=10)
     # Side view (xz-plane)
+
     axs[1].plot(calculated_positions[:, 0], calculated_positions[:, 2], c='b', marker='o')
     axs[1].plot(true_hydrophone_positions[:, 0], true_hydrophone_positions[:, 2], c='r', marker='+')
+    if isinstance(signal_positions,np.ndarray):
+        axs[1].scatter(signal_positions[:, 0], signal_positions[:, 2], c='g', marker='o')
     axs[1].set_title('North View (Z vs X)')
     axs[1].set_xlabel('X-West', labelpad=10)
     axs[1].set_ylabel('Z-Vertical', labelpad=10)
     # Front view (yz-plane)
+
     axs[2].plot(calculated_positions[:, 1], calculated_positions[:, 2], c='b', marker='o')
     axs[2].plot(true_hydrophone_positions[:, 1], true_hydrophone_positions[:, 2], c='r', marker='+')
+    if isinstance(signal_positions,np.ndarray):
+        axs[2].scatter(signal_positions[:, 1], signal_positions[:, 2], c='g', marker='o')
     axs[2].set_title('West View (Z vs Y)')
     axs[2].set_xlabel('Y=South', labelpad=10)
     axs[2].set_ylabel('Z-Vertical', labelpad=10)
     # Plot 3D data in the 4th subplot
+
     ax3d.plot(calculated_positions[:, 0], calculated_positions[:, 1], calculated_positions[:, 2], c='blue', marker='o')
     ax3d.plot(true_hydrophone_positions[:, 0], true_hydrophone_positions[:, 1], true_hydrophone_positions[:, 2], c='red', marker='+')
+    if isinstance(signal_positions,np.ndarray):
+        ax3d.scatter(signal_positions[:, 0], signal_positions[:, 1], signal_positions[:, 2], c='green', marker='o')
     ax3d.set_title('3D Perspective')
     ax3d.view_init(30, 45)
     # Adjust spacing and labels

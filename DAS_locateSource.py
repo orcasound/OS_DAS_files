@@ -25,19 +25,21 @@ def loss(source_location):   #  Note: we are using the fiber's optimized hydroph
 
 ##########################################
 
-fiberFile = "fiber_files/fiber_N_100_L_1000_c_1485_initialXYZ_0__0__-5__descend_-5__-50__sinWiggle_5__5__shape_straight_x-axis.pickle"
-fiberFile = "fiber_files/fiber_N_100_L_1000_c_1485_initialXYZ_0__0__-5__descend_-30__-100__sinWiggle_5__5__shape_L_x-axis__0.1__North.pickle"
+fiberfile = "fiber_files/fiber_NH_100_L_1000_c_1485_NS_20_-5__descend_-30__-100__sinWiggle_15__5__shape_L_x-axis__0.5__North.pickle"
+fiberfile = "fiber_files/fiber_NH_100_L_1000_c_1485_NS_10_-5__descend_-30__-100__sinWiggle_15__5__shape_L_x-axis__0.5__North.pickle"
+fiber = pickle.load(open(fiberfile, "rb"))
 
-fiber = pickle.load(open(fiberFile, "rb"))
+S_source = [400, -100, -50]
+
 DEBUG = 0
 method = 'L-BFGS-B'
 method = 'BFGS'
 tol = 1e-9
 ITER = 0
 ###########  Model a source, since we don't have any real data right now
-S_surface = [500, -100, 0]
+
 true_hydrophone_positions = fiber.xyzsAlongFiber
-signal_locations = [S_surface]
+signal_locations = [S_source]
 observed_time_diffs = fiber.predict_time_diffs(true_hydrophone_positions, signal_locations)
 print("predicted time diffs for assumed source", observed_time_diffs)   # These are a model of what will be returned from DAS fiber
 
@@ -53,7 +55,7 @@ print("initial loss is ", x)
 result = minimize(loss, source_location, method=method,  tol=tol)
 optimized_source = result.x.reshape(-1, 3)
 print("Calculated Source location is ", optimized_source)
-print("'Actual' source location is ", S_surface)
+print("'Actual' source location is ", S_source)
 
 
 

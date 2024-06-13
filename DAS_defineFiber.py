@@ -53,9 +53,9 @@ fiberShape = {"initialXYZ":[0, 0, -5], "descend":[-30, -100],"sinWiggle":[15, 5]
 fiber = DAS_line(L_fiber, N_hydros, fiberShape = fiberShape, c=c_sound, locationUncertainty=locationUncertainty)
 
 json_string = convert_to_custom_format(fiberShape)
-fiberFile = "fiber_files/fiber_N_{}_L_{}_c_{}_{}.pickle".format(N_hydros, L_fiber, c_sound, json_string)
+fiberFile = "fiber_files/fiber_NH_{}_L_{}_c_{}_NS_0_{}.pickle".format(N_hydros, L_fiber, c_sound, json_string)
 pickle.dump(fiber, open(fiberFile, "wb"))
 print("saved fiber as {}".format(fiberFile))
 
-quadTitle = fiberShape+"/n Red = 'Actual'  Blue = Assumed"
-DAS_classes.quadPlot(fiber.xyzsAlongFiber, fiber.initial_xyzsAlongFiber, quadTitle)
+quadTitle = convert_to_custom_format(fiberShape)+"\n Red = 'Actual'  Blue = Assumed"
+DAS_classes.quadPlot(fiber.xyzsAlongFiber, fiber.initial_xyzsAlongFiber, None, quadTitle)
