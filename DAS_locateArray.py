@@ -45,18 +45,25 @@ fiber = pickle.load(open(fiberfile, "rb"))
 DEBUG = 0
 ITER = 0
 
-#######################################################
-def break_string_into_fixed_length_lines(long_string, max_length=120):
-    # Use a list comprehension to break the string into chunks of max_length
-    lines = [long_string[i:i+max_length] for i in range(0, len(long_string), max_length)]
-    return lines
-
-
 # Constants (Adjust as needed)
 NUM_HYDROPHONES = fiber.Nhydros
 NUM_SIGNAL_SOURCES = 10
 A = 1.0  # Weight for time difference MSE
 B = 0.0  # Weight for cable configuration MSE  THIS DOES NOT SEEM TO HELP - IT HURTS THE FITTING
+
+#minmization method
+method = 'BFGS'  # or 'L-BFGS-B'
+method = 'L-BFGS-B'
+method = 'BFGS'
+tol = 1e-6
+ITER = 0
+
+
+#######################################################
+def break_string_into_fixed_length_lines(long_string, max_length=120):
+    # Use a list comprehension to break the string into chunks of max_length
+    lines = [long_string[i:i+max_length] for i in range(0, len(long_string), max_length)]
+    return lines
 
 lines = break_string_into_fixed_length_lines(fiberfile, 60)
 newfilename = []
@@ -72,12 +79,12 @@ assert isinstance(fiber.xyzsAlongFiber, object)
 true_hydrophone_positions = fiber.xyzsAlongFiber
         # In the real world these (x,y,z)'s are only known approximately at first
 
-# setup signal locations to localize the hydrophones
+# setup underwater signal locations to localize the hydrophones
 # Define the minimum and maximum values for each dimension
-sig_min = [0, -500, 0]
-sig_max = [500, 100, -10]
+sig_min = [0, -500, 0]     #  locations here determined randomly
+sig_max = [500, 100, -12]  # 12 meters is the maximum length of my Lubell underwater speaker wire
 
-# Generate the list of tuples
+# Generate the list of tuples that represent places where localizing signals are sent from
 signal_positions = [
     np.array([
         random.uniform(sig_min[0], sig_max[0]),  # Random value between sig_min[0] and sig_max[0]
@@ -108,13 +115,6 @@ initial_positions = fiber.initial_xyzsAlongFiber
 print("initial_positions")
 print(initial_positions)
 DAS_classes.quadPlot(true_hydrophone_positions, initial_positions, signal_positions, "True hydrophone (red) positions vs initial assumptions (blue): {} Sources(green)".format(NUM_SIGNAL_SOURCES))
-
-#minmization method
-method = 'BFGS'  # or 'L-BFGS-B'
-method = 'L-BFGS-B'
-method = 'BFGS'
-tol = 1e-6
-ITER = 0
 
 print("Starting minimization --------------------")
 start_time = time.time()  # Record the start time

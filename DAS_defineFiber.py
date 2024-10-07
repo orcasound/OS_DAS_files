@@ -42,7 +42,7 @@ N_hydros = 100
 L_fiber = 1000
 c_sound = 1485
 locationUncertainty = 60   # used to generate assumed hydrophone locations 'near' modeled ones
-
+                           # in z direction, the location uncertainty is 1/10 of this
 fiberShape = {"initialXYZ":[0, 0, -5], "descend":[-0, -100],"sinWiggle":[5, 5], "shape":{"straight":"x-axis"}}
 fiberShape = {"initialXYZ":[0, 0, -5], "descend":[-.1, -100],"sinWiggle":[5, 5], "shape":{"straight":"x-axis"}}
 fiberShape = {"initialXYZ":[0, 0, -5], "descend":[-30, -50],"sinWiggle":[5, 5], "shape":{"straight":"x-axis"}}

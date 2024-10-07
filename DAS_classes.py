@@ -49,7 +49,9 @@ class DAS_line:
                         print(iSpec, l, self.specsDistanceAlongFiber[iSpec], l + dl , x, y)
                     if self.specsDistanceAlongFiber[iSpec] > l and self.specsDistanceAlongFiber[iSpec] <= l + dl:
                         self.xyzsAlongFiber.append([x, y, z])
-                        self.initial_xyzsAlongFiber.append([x+self.locationUncertainty*(np.random.rand()-0.5), (self.originY+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)])
+                        # N.B.  The initial locations are 'near' the actual (but unknown in the real world) locations
+                        #       The uncertainty in z is 1/10 of the x and y uncertainties as the bottom is the bottom!
+                        self.initial_xyzsAlongFiber.append([x+self.locationUncertainty*(np.random.rand()-0.5), (self.originY+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)/10.0])
                         iSpec += 1
                     x += dd
                     l += dl
@@ -69,7 +71,8 @@ class DAS_line:
                                 print(iSpec, l, self.specsDistanceAlongFiber[iSpec], l + dl, x, y)
                             if self.specsDistanceAlongFiber[iSpec] > l and self.specsDistanceAlongFiber[iSpec] <= l + dl:
                                 self.xyzsAlongFiber.append([x, y, z])
-                                approxLoc = [x+self.locationUncertainty*(np.random.rand()-0.5), (y+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)]
+                                #  set z component to have 1/10 error range as do x and y
+                                approxLoc = [x+self.locationUncertainty*(np.random.rand()-0.5), (y+self.locationUncertainty*(np.random.rand()-0.5)), z+self.locationUncertainty*(np.random.rand()-0.5)/10.0]
                                 self.initial_xyzsAlongFiber.append(approxLoc)
                                 iSpec += 1
                             x += dd
@@ -87,7 +90,7 @@ class DAS_line:
                                 self.xyzsAlongFiber.append([x, y, z])
                                 self.initial_xyzsAlongFiber.append(
                                     [xL + self.locationUncertainty * (np.random.rand() - 0.5), (y + self.locationUncertainty * (np.random.rand() - 0.5)),
-                                     z + self.locationUncertainty * (np.random.rand() - 0.5)])
+                                     z + self.locationUncertainty * (np.random.rand() - 0.5)/10.0])
                                 iSpec += 1
                             if self.fiberShape['shape']['L'][2] == 'North':
                                 y -= dd
