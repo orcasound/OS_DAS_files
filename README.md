@@ -11,7 +11,7 @@
 ###  Now, with a fiber deployed, a number of sources are used at random points near the surface to 'Localize' the individual hydrophone elements
 #### Red is the 'actual' (i.e. assumed fiber) and Blue is the located array after localization using a number of locating signals (Green).
 ![3d LOCALIZATION FIBER](LocalizedFiber.png)
-####  This localization, with 100 hydrophones and 10 sources with maximum depth of 10 meters took some 80 seconds (stopping tolerance 1e-6) on my desktop. There are large vertical fitting errors near the start of the fiber. Using some deeper localization sources or source locations closer to the shallow hydrophones would likely fix this.
+####  This localization, with 100 hydrophones and 10 sources with maximum depth of 10 meters took some 40 seconds (stopping tolerance 1e-6) on my desktop.
 
 ### The localized fiber is then used to calculate source locations.
 
