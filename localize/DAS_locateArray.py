@@ -2,8 +2,6 @@ import numpy as np
 from scipy.optimize import minimize
 from sklearn.metrics import r2_score
 import pickle
-import matplotlib.pyplot as plt
-from DAS_classes import DAS_line
 from scipy.optimize import approx_fprime
 import time
 import DAS_classes
